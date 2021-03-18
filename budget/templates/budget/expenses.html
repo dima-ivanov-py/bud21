@@ -1,0 +1,115 @@
+{% extends 'budget/index.html' %}
+
+{% block title %}EXPENSES{% endblock %}
+
+{% block content %}
+<h1>Expenses page</h1>
+
+<form action="{% url 'budget:create_expense' %}" method="POST">
+{% csrf_token %}
+    <input class="form-control" type="text" maxlength="21"
+        name="balance" 
+        placeholder="balance"><br>
+    <input class="form-control" type="text" maxlength="21"
+        required
+        name="title"
+        placeholder="*title"><br>
+    <input class="form-control" type="text" maxlength="50"
+        name="description"
+        placeholder="description"><br>
+    <input class="form-control" type="number" required name="total"
+        min="-100000"
+        max="100000"
+        step=".01"
+        placeholder="*total"><br>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">add</button>
+    </div>
+</form>
+<hr>
+
+{% if expenses %}
+    <form method="GET">
+        <input class="form-control" type="text" name="balance" 
+            maxlength="21"
+            placeholder="balance"><br>
+        <input class="form-control" type="text" name="title"
+            maxlength="21"
+            placeholder="title"><br>
+        <input class="form-control" type="text" name="description"
+            maxlength="50"
+            placeholder="description"><br>
+        <input class="form-control" type="number" name="total"
+            min="-100000"
+            max="100000"
+            step=".01"
+            placeholder="total"><br>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"
+                        maxlength="8"
+                        name="date_range_min"
+                        placeholder="mm/dd/yy">
+                    <label for="floatingInput">min -- "mm/dd/yy"</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"
+                        maxlength="8"
+                        name="date_range_max"
+                        placeholder="mm/dd/yy">
+                    <label for="floatingInput">max -- "mm/dd/yy"</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">search</button>
+        </div>
+    </form>
+    <hr>
+
+    <form method="POST">
+    {% csrf_token %}
+        <div class="col-12">
+            <button class="btn btn-outline-success" type="submit">csv</button>
+        </div>
+    </form>
+    <hr>
+
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info"
+            href="?page=1">&laquo; first</a>
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.next_page_number }}">next</a>
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+    <hr>
+{% else %}
+    <p>there are no expenses</p>
+    <a class="btn btn-outline-info"
+        href="{% url 'budget:expenses' %}">refresh</a>
+{% endif %}
+
+{% for expense in page_obj %}
+    <p>balance: {{ expense.balance }}</p>
+    <p>title: {{ expense.title }}</p>
+    <p>description: {{ expense.description }}</p>
+    <p>total: {{ expense.total }}</p>
+    <p>added: {{ expense.pub_date }}</p>
+    <a class="text-danger"
+        href={% url 'budget:delete_expense' expense.pk %}>delete</a>
+    <a href={% url 'budget:edit_expense' expense.pk %}>edit</a>
+    <hr>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'budget/index.html' %}
+
+{% block title %}EXPENSE DELETION{% endblock %}
+
+{% block content %}
+<h1>Delete the expense "{{expense.title}}"?</h1><br>
+
+<form method="POST">
+{% csrf_token %}
+    <div class="col-12">
+        <button class="btn btn-danger" type="submit">yes</button>
+        <a href={% url 'budget:expenses' %}>cancel</a>
+    </div>
+</form>
+{% endblock %}
