@@ -15,46 +15,109 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Profit',
+            name="Profit",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.CharField(blank=True, default='', max_length=21)),
-                ('title', models.CharField(max_length=21)),
-                ('description', models.CharField(blank=True, default='', max_length=50)),
-                ('total', models.DecimalField(decimal_places=2, max_digits=13)),
-                ('pub_date', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "balance",
+                    models.CharField(blank=True, default="", max_length=21),
+                ),
+                ("title", models.CharField(max_length=21)),
+                (
+                    "description",
+                    models.CharField(blank=True, default="", max_length=50),
+                ),
+                (
+                    "total",
+                    models.DecimalField(decimal_places=2, max_digits=13),
+                ),
+                ("pub_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-pub_date'],
+                "ordering": ["-pub_date"],
             },
         ),
         migrations.CreateModel(
-            name='Expense',
+            name="Expense",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.CharField(blank=True, default='', max_length=21)),
-                ('title', models.CharField(max_length=21)),
-                ('description', models.CharField(blank=True, default='', max_length=50)),
-                ('total', models.DecimalField(decimal_places=2, max_digits=13)),
-                ('pub_date', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "balance",
+                    models.CharField(blank=True, default="", max_length=21),
+                ),
+                ("title", models.CharField(max_length=21)),
+                (
+                    "description",
+                    models.CharField(blank=True, default="", max_length=50),
+                ),
+                (
+                    "total",
+                    models.DecimalField(decimal_places=2, max_digits=13),
+                ),
+                ("pub_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-pub_date'],
+                "ordering": ["-pub_date"],
             },
         ),
         migrations.CreateModel(
-            name='Balance',
+            name="Balance",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=21)),
-                ('total', models.DecimalField(decimal_places=2, max_digits=13)),
-                ('pub_date', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=21)),
+                (
+                    "total",
+                    models.DecimalField(decimal_places=2, max_digits=13),
+                ),
+                ("pub_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-pub_date'],
+                "ordering": ["-pub_date"],
             },
         ),
     ]
