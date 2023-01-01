@@ -59,19 +59,19 @@ def create_expense(request):
 
 
 def get_balances(request):
-    balances = request.user.balance_set.all()
+    balances = request.user.balance_set.all().order_by("-pub_date")
     balance_filter = BalanceFilter(request.GET, queryset=balances)
     return balance_filter.qs
 
 
 def get_profits(request):
-    profits = request.user.profit_set.all()
+    profits = request.user.profit_set.all().order_by("-pub_date")
     profit_filter = ProfitFilter(request.GET, queryset=profits)
     return profit_filter.qs
 
 
 def get_expenses(request):
-    expenses = request.user.expense_set.all()
+    expenses = request.user.expense_set.all().order_by("-pub_date")
     expense_filter = ExpenseFilter(request.GET, queryset=expenses)
     return expense_filter.qs
 
