@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+{% block title %}BALANCES{% endblock %}
+
+{% block content %}
+<h1>Balances page</h1>
+
+{% for message in messages %}
+    <p class="text-danger">{{ message }}</p>
+{% endfor %}
+
+<form action="{% url 'budget:create_balance' %}" method="POST">
+{% csrf_token %}
+    <div class="row">
+        <div class="col">
+            <input class="form-control" type="text" maxlength="21"
+                required name="title"
+                placeholder="*title">
+        </div>
+
+        <div class="col">
+            <input class="form-control" type="number" required name="total"
+                min="-100000"
+                max="100000"
+                step=".01"
+                placeholder="*total"><br>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">create</button>
+        </div>
+    </div>
+</form>
+<hr>
+
+{% if balances %}
+    <form method="GET">
+        <input class="form-control" type="text" name="title"
+            maxlength="21"
+            placeholder="title"><br>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">search</button>
+        </div>
+    </form>
+    <hr>
+
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info"
+            href="?page=1">&laquo; first</a>
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.next_page_number }}">next</a>
+        <a class="btn btn-outline-info"
+            href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+    <hr>
+{% else %}
+    <p>there are no balances</p>
+    <a class="btn btn-outline-info"
+        href="{% url 'budget:balances' %}">refresh</a>
+{% endif %}
+
+{% for balance in page_obj %}
+    <p>title: {{ balance.title }}</p>
+    <p>total: {{ balance.total }}</p>
+    <p>created: {{ balance.pub_date }}</p>
+    <a class="text-danger" 
+        href={% url 'budget:delete_balance' balance.pk %}>delete</a>
+    <a href={% url 'budget:edit_balance' balance.pk %}>edit</a>
+    <hr>
+{% endfor %}
+{% endblock %}
