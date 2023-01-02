@@ -15,4 +15,3 @@ urlpatterns = [
     path("budget/", include("apps.budget.urls")),
     path("users/", include("apps.users.urls")),
 ]
-
